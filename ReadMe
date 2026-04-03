@@ -1,0 +1,6 @@
+Download the python from https://www.python.org/downloads/
+Clone the repo and download the file abc_dentry_test.py, and open in visual studio code.
+open the terminal in visual studio by ctrl+`
+go to location where you clone or download the file
+run below command
+python abc_dentry_strategy.py ( EXample: PS C:\Users\VINITESH\Downloads\New folder> python abc_dentry_strategy.py)
