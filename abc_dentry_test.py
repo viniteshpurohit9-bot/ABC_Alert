@@ -39,8 +39,8 @@ ALERT_DISTANCE = 10      # Points near dEntryLine to trigger alert
 MIN_TICK       = 0.05    # Minimum tick size for NSE stocks
 
 # Telegram Settings (Get these from @BotFather and @userinfobot)
-TELEGRAM_BOT_TOKEN = "8557185837:AAG-UtuwD-S6G1jztGSQUcaV7MMtIBP0ZUo"
-TELEGRAM_CHAT_ID   = "6281162552"
+TELEGRAM_BOT_TOKEN = ""
+TELEGRAM_CHAT_ID   = ""
 
 
 # ─────────────────────────────────────────
