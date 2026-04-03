@@ -21,24 +21,36 @@ from datetime import datetime
 #  CONFIG
 # ─────────────────────────────────────────
 NIFTY_10 = [
-    "RELIANCE.NS",
-    "TCS.NS",
-    "HDFCBANK.NS",
-    "ICICIBANK.NS",
-    "INFY.NS",
-    "HINDUNILVR.NS",
-    "ITC.NS",
-    "SBIN.NS",
-    "BHARTIARTL.NS",
-    "KOTAKBANK.NS",
+  "ABB.NS","ACC.NS","ADANIENT.NS","ADANIPORTS.NS","AMBUJACEM.NS","APOLLOHOSP.NS","APOLLOTYRE.NS",
+    "ASHOKLEY.NS","ASIANPAINT.NS","AUROPHARMA.NS","AXISBANK.NS","BAJAJ-AUTO.NS","BAJAJFINSV.NS",
+    "BAJFINANCE.NS","BALKRISIND.NS","BANDHANBNK.NS","BANKBARODA.NS","BEL.NS","BERGEPAINT.NS",
+    "BHARATFORG.NS","BHARTIARTL.NS","BHEL.NS","BIOCON.NS","BOSCHLTD.NS","BPCL.NS","BRITANNIA.NS",
+    "CANBK.NS","CANFINHOME.NS","CHAMBLFERT.NS","CHOLAFIN.NS","CIPLA.NS","COALINDIA.NS","COFORGE.NS",
+    "COLPAL.NS","CONCOR.NS","CROMPTON.NS","CUMMINSIND.NS","DABUR.NS","DALBHARAT.NS","DEEPAKNTR.NS",
+    "DIVISLAB.NS","DLF.NS","DRREDDY.NS","EICHERMOT.NS","ESCORTS.NS","EXIDEIND.NS","FEDERALBNK.NS",
+    "GAIL.NS","GLENMARK.NS","GMRINFRA.NS","GNFC.NS","GODREJCP.NS","GODREJPROP.NS","GRANULES.NS",
+    "GRASIM.NS","GUJGASLTD.NS","HAL.NS","HAVELLS.NS","HCLTECH.NS","HDFC.NS","HDFCAMC.NS","HDFCBANK.NS",
+    "HDFCLIFE.NS","HEROMOTOCO.NS","HINDALCO.NS","HINDCOPPER.NS","HINDPETRO.NS","HINDUNILVR.NS",
+    "ICICIBANK.NS","ICICIGI.NS","ICICIPRULI.NS","IDEA.NS","IDFC.NS","IDFCFIRSTB.NS","IGL.NS","INDHOTEL.NS",
+    "INDIACEM.NS","INDIAMART.NS","INDIGO.NS","INDUSINDBK.NS","INDUSTOWER.NS","INFY.NS","IOC.NS","IPCALAB.NS",
+    "IRCTC.NS","ITC.NS","JINDALSTEL.NS","JKCEMENT.NS","JSWSTEEL.NS","JUBLFOOD.NS","KOTAKBANK.NS","L&TFH.NS",
+    "LICHSGFIN.NS","LT.NS","LTIM.NS","LTTS.NS","LUPIN.NS","M&M.NS","M&MFIN.NS","MANAPPURAM.NS","MARICO.NS",
+    "MARUTI.NS","MCX.NS","METROPOLIS.NS","MFSL.NS","MGL.NS","MOTHERSON.NS","MPHASIS.NS","MRF.NS","MUTHOOTFIN.NS",
+    "NAM-INDIA.NS","NATIONALUM.NS","NAVINFLUOR.NS","NBCC.NS","NCC.NS","NESTLEIND.NS","NMDC.NS","NTPC.NS",
+    "OBEROIRLTY.NS","OFSS.NS","ONGC.NS","PAGEIND.NS","PEL.NS","PERSISTENT.NS","PETRONET.NS","PFC.NS","PIDILITIND.NS",
+    "PIIND.NS","PNB.NS","POLYCAB.NS","POWERGRID.NS","PVRINOX.NS","RAMCOCEM.NS","RBLBANK.NS","RECLTD.NS",
+    "RELIANCE.NS","SAIL.NS","SBICARD.NS","SBILIFE.NS","SBIN.NS","SHREECEM.NS","SIEMENS.NS","SRF.NS","SUNPHARMA.NS",
+    "SUNTV.NS","SUZLON.NS","SYRMA.NS","TATACHEM.NS","TATACOMM.NS","TATACONSUM.NS","TATAELXSI.NS","TATAMOTORS.NS",
+    "TATAPOWER.NS","TATASTEEL.NS","TECHM.NS","TITAN.NS","TORNTPHARM.NS","TRENT.NS","TVSMOTOR.NS","UBL.NS",
+    "ULTRACEMCO.NS","UNIONBANK.NS","UPL.NS","VEDL.NS","VOLTAS.NS","WIPRO.NS","ZEEL.NS","ZYDUSLIFE.NS"
 ]
 
-INTERVAL       = "1h"    # 1-hour candles
-PERIOD         = "30d"   # Last 30 days (yfinance supports up to 730d for 1h)
-ALERT_DISTANCE = 10      # Points near dEntryLine to trigger alert
+INTERVAL       = "1D"    # 1-hour candles
+PERIOD         = "90d"   # Last 30 days (yfinance supports up to 730d for 1h)
+ALERT_DISTANCE = 20      # Points near dEntryLine to trigger alert
 MIN_TICK       = 0.05    # Minimum tick size for NSE stocks
 
-# Telegram Settings (Get these from @BotFather and @userinfobot)
+# Telegram Settings
 TELEGRAM_BOT_TOKEN = ""
 TELEGRAM_CHAT_ID   = ""
 
@@ -240,8 +252,6 @@ def send_telegram_message(message: str):
         response = requests.post(url, json=payload, timeout=10)
         if response.status_code != 200:
             print(f"  [!] Telegram API Error: {response.status_code} - {response.text}")
-        else:
-            print("  [✓] Telegram notification sent successfully.")
     except Exception as e:
         print(f"  [!] Failed to send Telegram alert: {e}")
 
@@ -282,10 +292,8 @@ def print_results(results: list):
                        f"Price: Rs.{r['current_price']:.2f}\n"
                        f"Line: Rs.{r['dEntryLine']:.2f}\n"
                        f"Dist: {r['distance']:.2f} pts\n\n")
-            
-        # Send batch notification
+        
         send_telegram_message(tg_msg)
-
     else:
         print("\n  [OK] No alerts firing right now.\n")
 
@@ -330,7 +338,7 @@ def main():
     print(f"  Data    : Last {PERIOD} @ {INTERVAL} interval")
     print("=" * 65 + "\n")
 
-    # Test notification to verify connection on startup
+    # Initial startup notification
     send_telegram_message(f"🚀 *ABC-DEntry Scanner Started*\nMonitoring {len(NIFTY_10)} stocks...")
 
     results = []
